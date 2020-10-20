@@ -1,8 +1,12 @@
+// Constants to define how thte schedule works.  Adjust to 
+// increase / decrease start/stop time, columns and rows used for text area
 const standardDayBegin = 7;
 const standardDayEnd = 18;
 const textAreaColumns = 90;
 const textAreaRows = 4;
-var currentHour = 11;
+
+// Global variables - all to be loaded later
+var currentHour;
 var hourSelected;
 var hoursNoteString;
 var calendarDayText = [];
@@ -10,15 +14,18 @@ var currentDate;
 
 $(document).ready(function() {
 
+    // Empty the schedule to prepare for loading the schedule from JavaScript
     function emptySchedule () {
         $(".container").empty ();
     }
 
+    // This builds the schedule with the hour, text area, save button.  It will be empty.
     function buildSchedule () {
         var divElementRow;
         var divElementHour;
         var textAreaElement;
         var buttonElement;
+        var iElement;
         var timePeriodText;
         var timeText;
         var counter;
@@ -56,12 +63,14 @@ $(document).ready(function() {
             divElementRow.append (textAreaElement);
 
             buttonElement = $(`<button class="saveBtn" houris="${counter}">`);
-            buttonElement.text (`
-            Save`);
+            iElement = $(`<i class="fas fa-save">`);
+            
             divElementRow.append (buttonElement);
+            buttonElement.append (iElement);
         }
     }
 
+    // This writes all saved calendar entries to the blank calendar.
     function writeCalendarData () {
         var workingTextArea;
 
@@ -80,6 +89,7 @@ $(document).ready(function() {
         }
     }
 
+    // Load the calendar data from localStorage, if it exists
     function loadCalendarData () {
         var tempArray = JSON.parse(localStorage.getItem("GDOG-Work-Day-Scheduler"));
         if (tempArray !== null) {
@@ -87,10 +97,13 @@ $(document).ready(function() {
         }
     }
       
+    // Save the calendarDayText array to localStorage.  This is called after
+    // a user clicks the save button
     function saveCalendarData () {
         localStorage.setItem ("GDOG-Work-Day-Scheduler", JSON.stringify(calendarDayText));
     }
 
+    // Return the full month text based on the date passed
     function getMonthText (currentDate) {
         var month = [];
         month[0] = "January";
@@ -108,6 +121,7 @@ $(document).ready(function() {
         return month[currentDate.getMonth()];        
     }
 
+    // Return the day of the week text based on teh date passed
     function getDayText (currentDate) {
         var days = [];
         days[0] = "Sunday";
@@ -120,6 +134,7 @@ $(document).ready(function() {
         return days[currentDate.getDay()];        
     }
 
+    // Write the current date to the HTML ID #currentDay
     function writeCurrentDate (currentDate) {
         var fullDateText;
         var monthText = getMonthText (currentDate);
@@ -134,10 +149,8 @@ $(document).ready(function() {
         console.log (`Date:  ${fullDateText}`);
     }
 
-    var d = new Date("July 21, 1983 01:15:00");
-    var n = d.getDate();
-    console.log ("N: "+ n);
-
+    //Begin main program
+    // Grab date
     currentDate = new Date ();
     currentHour = currentDate.getHours();
     console.log (currentDate.getMonth ());
