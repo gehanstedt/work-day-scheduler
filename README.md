@@ -13,7 +13,8 @@ throughout a day.
         * standardDayBegin
         * standardDayEnd
 * The current hour is displayed in red.  Previous hours are in gray.  Future hours are in green.
-* The user can click and enter text in the large field to the right of the hour.  After entering, the user can click the Save icon to save that hour's data to localStorage.
+* The user can click and enter text in the large field to the right of the hour.  After entering, the user can click the Save icon (blue button with floppy disk icon) to save that hour's data to localStorage.
+    * Floppy disk reference, for those that don't know...  https://en.wikipedia.org/wiki/Floppy_disk
 * When reloaded, the schedule will remember all values that were previously entered.
 
 ## Website
